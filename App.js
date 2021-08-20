@@ -1,21 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import userList from './src/components/UserList';
+import userform from './src/components/UserFrom';
+import { Button, Icon } from 'react-native-elements';
+
+
+const Stack = createNativeStackNavigator()
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="UserList" screenOptions={screenOptions}>
+        <Stack.Screen 
+        name="UserList"
+         component={userList}
+         options={({navigation}) => {
+             return {
+             title: 'Lista de Usuários',
+             headerRight: () => (
+              <Button
+              onPress={() => navigation.navigate('UserForm')} 
+              type="clear" icon={<Icon name="add" size={25} color="white" />} />
+            )
+           }
+          }
+         }
+         />
+        <Stack.Screen name="UserForm" component={userform}  options={{ title: 'Formulário de Usuários'}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const screenOptions = {
+  headerStyle: {
+    backgroundColor: '#f4511e'
   },
-});
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+     fontWeight: 'bold'
+  }
+}
