@@ -4,12 +4,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import userList from './src/components/UserList';
 import userform from './src/components/UserFrom';
 import { Button, Icon } from 'react-native-elements';
+import { UsersProvider } from './src/context/user/user.context';
 
 
 const Stack = createNativeStackNavigator()
 
 export default function App() {
   return (
+    <UsersProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="UserList" screenOptions={screenOptions}>
         <Stack.Screen 
@@ -30,6 +32,8 @@ export default function App() {
         <Stack.Screen name="UserForm" component={userform}  options={{ title: 'Formulário de Usuários'}}/>
       </Stack.Navigator>
     </NavigationContainer>
+
+    </UsersProvider>
   )
 }
 const screenOptions = {
